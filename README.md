@@ -1,35 +1,37 @@
 # Face Mask Detection
 
-Lightweight demo project for detecting whether a person is wearing a face mask. Includes a pre-trained Keras/TensorFlow model, a sample notebook for training/evaluation, and a reference dataset folder layout.
+Public-ready packaging for a simple face mask detector. The repo contains a training notebook, a saved Keras/TensorFlow model, and a reference dataset layout with no personal images. Replace the sample folders with your own data before publishing.
 
-## Project Structure
+## Repository Layout
 - `notebook/Face_Mask_Detection.ipynb` — end-to-end training and evaluation notebook.
-- `notebook/face_mask_detection_model.h5` — saved model produced by the notebook.
-- `DataSet/with_mask/`, `DataSet/without_mask/` — example dataset layout (images organized by class).
-- `test/` — place to store images you want to run inference on.
-- `requirements.txt` — Python dependencies.
+- `notebook/face_mask_detection_model.h5` — pretrained weights produced by the notebook.
+- `DataSet/with_mask/`, `DataSet/without_mask/` — expected dataset layout (empty or sample-only; add your own images).
+- `test/` — drop images here for quick inference checks.
+- `requirements.txt` — minimal dependency set for training and inference.
 
-## Quickstart
-1) Install Python 3.9+.
-2) (Recommended) Create a virtual environment:
+## Setup
+1. Install Python 3.9–3.11.
+2. (Recommended) Create a virtual environment:
    ```bash
    python -m venv .venv
    source .venv/bin/activate
    ```
-3) Install dependencies:
+3. Install dependencies:
    ```bash
    pip install -r requirements.txt
    ```
-4) Open the notebook in VS Code or Jupyter and run cells in order:
-   - Load data
-   - Train/validate
-   - Export `face_mask_detection_model.h5`
+4. If you use VS Code or Jupyter, ensure the `.venv` kernel is selected before running the notebook.
 
-## Using the Pretrained Model for Inference
-Below is a minimal Python snippet to load the saved model and run prediction on a single image:
+## Training
+1. Populate `DataSet/with_mask/` and `DataSet/without_mask/` with your own images (no personal data included in this repo).
+2. Open `notebook/Face_Mask_Detection.ipynb` and run cells in order to train and validate.
+3. The trained model is saved to `notebook/face_mask_detection_model.h5`.
+
+## Inference (Pretrained Model)
+Run a quick check on a single image using the saved model:
 ```python
-import tensorflow as tf
 import numpy as np
+import tensorflow as tf
 from tensorflow.keras.preprocessing import image
 
 model = tf.keras.models.load_model("notebook/face_mask_detection_model.h5")
@@ -41,12 +43,7 @@ label = "with_mask" if pred < 0.5 else "without_mask"
 print(label, float(pred))
 ```
 
-## Training Notes
-- Dataset expects two class folders: `with_mask` and `without_mask`.
-- Ensure images are reasonably balanced between classes.
-- Adjust image size and augmentation parameters inside the notebook to fit your hardware.
-
-## Tips
-- If you add new large assets (images, models), update `.gitignore` accordingly.
-- For faster experiments, start with a small subset of images to verify the pipeline.
-- Consider exporting to TensorFlow Lite or ONNX for deployment once satisfied with accuracy.
+## Publishing Notes
+- This README and requirements are cleaned of personal details; add a license file before publishing.
+- If you introduce large assets (new datasets or bigger models), add them to `.gitignore` or store them via releases/storage and document the download step.
+- Consider exporting to TensorFlow Lite or ONNX for deployment once the model meets your accuracy requirements.
