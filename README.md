@@ -42,8 +42,3 @@ pred = model.predict(img_array)[0][0]
 label = "with_mask" if pred < 0.5 else "without_mask"
 print(label, float(pred))
 ```
-
-## Publishing Notes
-- This README and requirements are cleaned of personal details; add a license file before publishing.
-- If you introduce large assets (new datasets or bigger models), add them to `.gitignore` or store them via releases/storage and document the download step.
-- Consider exporting to TensorFlow Lite or ONNX for deployment once the model meets your accuracy requirements.
